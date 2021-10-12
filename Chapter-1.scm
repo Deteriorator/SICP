@@ -122,4 +122,21 @@ circumference
    (+ a 1))
 
 ; exam 1.2
-(/ () ())
+(/ (+ 5
+      4
+      (- 2
+         (- 3
+            (+ (/ 4 5)
+               6))))
+   (* 3
+      (- 6 2)
+      (- 2 7)))
+
+; exam 1.3
+(define (maxsum a b c)
+  (cond ((and (> a c) (> b c)) (+ a b))
+        ((and (> a b) (> c b)) (+ a c))
+        (else (+ b c))))
+
+(maxsum 1 2 3)
+
