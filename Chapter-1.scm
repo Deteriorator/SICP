@@ -140,3 +140,76 @@ circumference
 
 (maxsum 1 2 3)
 
+; exam 1.4
+; 这个题目的意思是 a 加上 b 的绝对值， 当 b 小于零的时候， 对 b 取反 
+(define (a-plus-abs-b a b)
+  ((if (> b 0) + -) a b))
+
+(a-plus-abs-b 1 -7)
+(a-plus-abs-b 2 6)
+
+; exam 1.5
+(define (p) (p))
+
+(define (test x y)
+  (if (= x 0)
+      0
+      y))
+
+;(test 0 (p))
+
+;; https://www.cnblogs.com/geckor/articles/1203520.html
+;; SICP No.1.5
+;; 本题为理解题
+
+;; (define (p) (p))
+;;
+;; 相当于定义了一个无限递归函数p, p作为operator,以0个operant为参数。根据定义
+;; 可知,(p)会被evalute为(p), 而(p)再evaluate为(p). 无穷尽。
+;; p自身作为一个procedure是没有问题的,我们允许定义递归函数,但当p作用于operant
+;; 时,(p)是有问题的,因为它的evaluation是无限递归的。所以,可知,在scheme中,
+;; ()的作用决不仅是优先级的控制工具,而是不可忽略的语义控制工具。p 是一个函数,
+;; 而(p)是函数p作用于其参数(0个)后的返回值。
+;;
+;; Test-it:
+;; Welcome to MzScheme version 209, Copyright (c) 2004 PLT Scheme, Inc.
+;; > (define (p) (p))
+;; > p
+;; #<procedure:p>
+;; > (p)
+;; 交互解释器在此失去反应
+
+;; (define (test x y)
+;;  (if (= x 0)
+;;      0
+;;      y))
+;; (test 0 (p))
+;;
+;; 因此,测试函数在不同原则的evaluation顺序下的结果就很容易推测了。在
+;; normal-order evaluation原则下,只有当一个表达式的值被需要的时候才
+;; evaluation, (test 0 (p)) 将被evaluate 为 (if (= 0 0) 0 (p)),
+;; 因为判断条件成立,最后表达式evaluate为0, 不需要计算(p)的值,从而
+;; 避免了无限递归的发生; 而在applicative-order的原则下, 所有的
+;; operants必须在代入前evaluate,因此(p)的计算无法避免,结果是无限递归。
+;;
+;; Test-it:
+;; > (test 0 (p))
+;; 交互解释器在此失去反应, 因为scheme使用applicative-order evaluation
+
+;; 如果我们定义
+;; (define (p) p)
+;; 则是另外一个意思,它定义了一个有0个operant的函数p, 当它作用于其operant
+;; 时,返回置为其自身,这样我们有(p)被evaluate为p,那么((p))被evaluate为
+;; (p) 然后再evaluate为p,那么((((((p))))))
+;;
+;; Test-it:
+;; > (define (p) p)
+;; > p
+;; #<procedure:p>
+;; > (p)
+;; #<procedure:p>
+;; > ((p))
+;; #<procedure:p>
+;; > (((((((((((((((((((((((p)))))))))))))))))))))))
+;; #<procedure:p>
+
