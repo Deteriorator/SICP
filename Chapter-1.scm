@@ -245,3 +245,30 @@ circumference
 ;11.704699917758145
 ;1.7739279023207892
 ;1000.000369924366
+
+; exam 1.6
+(define (new-if predicate then-clause else-clause)
+  (cond (predicate then-clause)
+        (else else-clause)))
+
+(new-if (= 2 3) 0 5)
+(new-if (= 1 1) 0 5)
+;5
+;0
+
+(define (sqrt-iter1 guess x)
+  (new-if (good-enough? guess x)
+          guess
+          (sqrt-iter1 (improve guess x)
+                     x)))
+;(sqrt-iter1 1.0 9)
+; 会内存溢出
+
+; exam 1.7
+; todo
+
+; exam 1.8
+
+
+; 1.1.8
+
